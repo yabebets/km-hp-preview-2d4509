@@ -94,8 +94,14 @@
   .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
   .hero-stage { margin: clamp(20px, 4vw, 40px) auto 0; max-width: 1080px; padding: 0 10px; }
   .hero-side {
-    position: absolute; top: 40px; right: 14px; writing-mode: vertical-rl;
+    position: fixed; z-index: 40; top: calc(var(--header-h) + 46px);
+    right: max(16px, calc((100vw - 1180px) / 2 - 26px));
+    writing-mode: vertical-rl;
     font-size: .72rem; font-weight: 600; letter-spacing: .32em; color: var(--ink-2);
+    pointer-events: none;
+    /* --side-shift: スクロールに合わせた追従量、--side-fade: 表示の濃さ */
+    transform: translateY(var(--side-shift, 0px));
+    opacity: var(--side-fade, 1);
   }
   .hero-side::before { content: ""; display: block; width: 1.5px; height: 34px; background: var(--red); margin: 0 auto 14px; }
 
@@ -234,6 +240,7 @@
   @media (prefers-reduced-motion: no-preference) {
     .reveal { opacity: 0; transform: translateY(14px); transition: opacity .65s ease, transform .65s ease; }
     .reveal.is-visible { opacity: 1; transform: none; }
+    .hero-side { transition: transform .45s cubic-bezier(.22,.61,.36,1), opacity .45s ease; }
     html { scroll-behavior: smooth; }
   }
 
@@ -1877,6 +1884,26 @@ M3280 3264 c0 -14 -8 -16 -51 -11 -37 5 -49 3 -46 -6 2 -7 24 -13 49 -15 45
         form.reset();
       });
     }
+    var side = document.querySelector('.hero-side');
+    if (side && window.matchMedia('(prefers-reduced-motion: no-preference)').matches) {
+      var ticking = false;
+      var updateSide = function () {
+        ticking = false;
+        var y = window.scrollY || window.pageYOffset;
+        // ヒーローを抜けるまでゆっくり下へ追従し、その後そっと消える
+        var travel = Math.min(y * 0.32, 190);
+        var fadeFrom = window.innerHeight * 0.85;
+        var fade = y <= fadeFrom ? 1 : Math.max(0, 1 - (y - fadeFrom) / 220);
+        side.style.setProperty('--side-shift', travel.toFixed(1) + 'px');
+        side.style.setProperty('--side-fade', fade.toFixed(3));
+      };
+      window.addEventListener('scroll', function () {
+        if (!ticking) { ticking = true; window.requestAnimationFrame(updateSide); }
+      }, { passive: true });
+      window.addEventListener('resize', updateSide, { passive: true });
+      updateSide();
+    }
+
     if ('IntersectionObserver' in window) {
       var io = new IntersectionObserver(function (entries) {
         entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('is-visible'); io.unobserve(en.target); } });
