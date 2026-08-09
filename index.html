@@ -205,12 +205,8 @@
 
   /* ---- contact ---- */
   .contact { border-top: 1.5px solid var(--rule-2); }
-  .contact-grid { display: grid; grid-template-columns: .9fr 1.1fr; gap: clamp(28px, 5vw, 52px); align-items: start; }
-  .cinfo .c-art { margin: 0 0 8px; }
-  .cinfo p { margin: 0 0 16px; font-size: .9rem; color: var(--ink-2); }
-  .cinfo dl { display: grid; grid-template-columns: 86px 1fr; margin: 0; }
-  .cinfo dt, .cinfo dd { margin: 0; padding: 11px 2px; border-bottom: 1.5px dashed var(--rule-2); font-size: .88rem; }
-  .cinfo dt { font-weight: 700; letter-spacing: .1em; color: var(--ink-2); }
+  .contact-grid { display: grid; justify-content: center; }
+  .contact-grid .form { width: min(100%, 620px); }
   .form { display: grid; gap: 14px; background: var(--card); border: 1.5px solid var(--ink); border-radius: 16px; padding: clamp(22px, 3vw, 32px); }
   .field { display: grid; gap: 6px; text-align: left; }
   .field label { font-size: .78rem; font-weight: 700; letter-spacing: .08em; color: var(--ink-2); }
@@ -246,7 +242,7 @@
 
   /* ---- responsive ---- */
   @media (max-width: 900px) {
-    .svc-grid, .media-grid, .contact-grid { grid-template-columns: 1fr; }
+    .svc-grid, .media-grid { grid-template-columns: 1fr; }
     .plans { grid-template-columns: 1fr; }
     .pt { grid-template-columns: 1fr; gap: 20px; }
     .pt:nth-child(even) .pt-art { order: 0; }
@@ -269,7 +265,6 @@
     .brand-sub { display: none; }
     .brand-name { font-size: .8rem; letter-spacing: 0; }
     .svc { padding: 24px 20px 52px; }
-    .cinfo dl { grid-template-columns: 76px 1fr; }
   }
 </style>
 </head>
@@ -643,15 +638,6 @@
         <svg class="squiggle" width="96" height="10" viewBox="0 0 96 10" fill="none" stroke="#E8542F" stroke-width="2" stroke-linecap="round"><path d="M2 6 q6 -8 12 0 t12 0 t12 0 t12 0 t12 0 t12 0 t12 0"/></svg>
       </div>
       <div class="contact-grid">
-        <div class="cinfo">
-          <svg class="c-art ink-art" width="120" height="90" viewBox="0 0 96 72" aria-hidden="true"><rect x="14" y="18" width="52" height="36" rx="5"/><path d="M14 22 l26 20 26 -20"/><path d="M80 14 v12 M74 20 h12" stroke="#E8542F"/><circle cx="84" cy="46" r="2.4"/></svg>
-          <p>オンライン（Google Meet 等）で全国対応。対面をご希望の方はご相談ください。</p>
-          <dl>
-            <dt>所在地</dt><dd>大阪市中央区</dd>
-            <dt>受付</dt><dd><span class="ph" title="要確認">平日 9:00〜18:00</span></dd>
-            <dt>対応</dt><dd>オンライン全国／対面（要相談）</dd>
-          </dl>
-        </div>
         <form class="form" id="contactForm" novalidate>
           <div class="field"><label for="f-name">お名前 ＊</label><input id="f-name" name="name" type="text" placeholder="山田 太郎" required></div>
           <div class="field"><label for="f-contact">メール または お電話 ＊</label><input id="f-contact" name="contact" type="text" placeholder="example@mail.com / 090-0000-0000" required></div>
