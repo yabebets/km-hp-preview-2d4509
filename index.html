@@ -108,14 +108,14 @@
   .squiggle { display: block; margin: 16px auto 0; }
 
   /* ---- services ---- */
-  .svc-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: 22px; align-items: stretch; }
+  .svc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; align-items: stretch; }
+  .svc.wide { grid-column: 1 / -1; }
   .svc {
     position: relative; background: var(--card); border: 1.5px solid var(--ink);
     border-radius: 16px; padding: 30px 28px 56px; text-align: center;
     display: flex; flex-direction: column; align-items: center;
   }
   .svc.feature { border-width: 2px; box-shadow: 6px 6px 0 var(--red-soft); }
-  .svc-col { display: grid; gap: 22px; align-content: stretch; }
   .svc .bds { display: flex; gap: 8px; justify-content: center; margin-bottom: 8px; }
   .svc .kicker { font-size: .74rem; font-weight: 700; letter-spacing: .14em; color: var(--ink-2); margin: 0; }
   .svc h3 { margin: 6px 0 4px; font-size: clamp(1.25rem, 2.6vw, 1.62rem); font-weight: 800; letter-spacing: .08em; line-height: 1.6; }
@@ -241,6 +241,9 @@
   }
 
   /* ---- responsive ---- */
+  @media (max-width: 1040px) {
+    .svc-grid { grid-template-columns: repeat(2, 1fr); }
+  }
   @media (max-width: 900px) {
     .svc-grid, .media-grid { grid-template-columns: 1fr; }
     .plans { grid-template-columns: 1fr; }
@@ -454,46 +457,44 @@
           <a class="go" href="#contact" aria-label="お問い合わせへ">→</a>
         </article>
 
-        <div class="svc-col">
-          <article class="svc">
-            <div class="bds"><span class="bd">顧問</span></div>
-            <p class="kicker">継続・月次</p>
-            <h3><span class="dash">税務顧問</span></h3>
-            <p class="price"><span class="amt">16,500</span><span class="unit">円（税込）〜 ／ 月</span></p>
-            <ul>
+        <article class="svc">
+          <div class="bds"><span class="bd">顧問</span></div>
+          <p class="kicker">継続・月次</p>
+          <h3><span class="dash">税務顧問</span></h3>
+          <p class="price"><span class="amt">16,500</span><span class="unit">円（税込）〜 ／ 月</span></p>
+          <ul>
               <li>日々の税務相談</li>
               <li>巡回監査</li>
               <li>税負担の最適化</li>
-            </ul>
-            <p class="foot-note">まずは面談のうえ、最適なプランをご提案します。</p>
-            <a class="go" href="#contact" aria-label="お問い合わせへ">→</a>
-          </article>
-          <article class="svc">
-            <div class="bds"><span class="bd">記帳</span></div>
-            <p class="kicker">継続・月次</p>
-            <h3><span class="dash">記帳代行</span></h3>
-            <p class="price"><span class="amt">11,000</span><span class="unit">円（税込）〜 ／ 月</span></p>
-            <ul>
+          </ul>
+          <p class="foot-note">まずは面談のうえ、最適なプランをご提案します。</p>
+          <a class="go" href="#contact" aria-label="お問い合わせへ">→</a>
+        </article>
+        <article class="svc">
+          <div class="bds"><span class="bd">記帳</span></div>
+          <p class="kicker">継続・月次</p>
+          <h3><span class="dash">記帳代行</span></h3>
+          <p class="price"><span class="amt">11,000</span><span class="unit">円（税込）〜 ／ 月</span></p>
+          <ul>
               <li>適切な会計処理をサポート</li>
               <li>月次決算</li>
-            </ul>
-            <a class="go" href="#contact" aria-label="お問い合わせへ">→</a>
-          </article>
-          <article class="svc">
-            <div class="bds"><span class="bd">年次</span></div>
-            <p class="kicker">スポット・年次</p>
-            <h3><span class="dash">決算・申告</span></h3>
-            <p class="price quiet">料金表を別途お渡しします</p>
-            <ul>
+          </ul>
+          <a class="go" href="#contact" aria-label="お問い合わせへ">→</a>
+        </article>
+        <article class="svc wide">
+          <div class="bds"><span class="bd">年次</span></div>
+          <p class="kicker">スポット・年次</p>
+          <h3><span class="dash">決算・申告</span></h3>
+          <p class="price quiet">料金表を別途お渡しします</p>
+          <ul>
               <li>法人税・所得税・消費税の申告</li>
               <li>年末調整・法定調書作成</li>
               <li>決算支援／記帳指導・記帳代行</li>
               <li>税務調査対応</li>
-            </ul>
-            <p class="foot-note">まずは面談のうえ、料金表をお渡しします。</p>
-            <a class="go" href="#contact" aria-label="お問い合わせへ">→</a>
-          </article>
-        </div>
+          </ul>
+          <p class="foot-note">まずは面談のうえ、料金表をお渡しします。</p>
+          <a class="go" href="#contact" aria-label="お問い合わせへ">→</a>
+        </article>
       </div>
 
       <div class="plans-band">
