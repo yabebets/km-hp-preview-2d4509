@@ -306,7 +306,14 @@
     .pt-body p { margin-inline: auto; }
     .about-grid { grid-template-columns: 1fr; }
     .portrait { position: static; max-width: 300px; }
-    .hero-side { display: none; }
+    .hero-side {
+      position: static; writing-mode: horizontal-tb; text-align: center;
+      margin: 0 0 16px; font-size: .68rem;
+    }
+    .hero-side::before { width: 30px; height: 1.5px; margin: 0 auto 8px; }
+  }
+  @media (max-width: 900px) and (prefers-reduced-motion: no-preference) {
+    .hero-side { opacity: 0; animation: heroIn .7s cubic-bezier(.22,.68,.36,1) forwards; }
   }
   @media (max-width: 680px) {
     .nav { display: none; }
