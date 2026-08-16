@@ -119,8 +119,15 @@
     position: relative; background: var(--card); border: 1.5px solid var(--ink);
     border-radius: 16px; padding: 30px 28px 56px; text-align: center;
     display: flex; flex-direction: column; align-items: center;
+    transition: transform .2s ease, box-shadow .2s ease;
   }
+  .svc:hover { transform: translateY(-6px) scale(1.035); box-shadow: 6px 6px 0 rgba(43,58,85,.14); z-index: 2; }
   .svc.feature { border-width: 2px; box-shadow: 6px 6px 0 var(--red-soft); }
+  .svc.feature:hover { box-shadow: 9px 9px 0 var(--red-soft); }
+  @media (prefers-reduced-motion: reduce) {
+    .svc { transition: none; }
+    .svc:hover { transform: none; }
+  }
   .svc .bds { display: flex; gap: 8px; justify-content: center; margin-bottom: 8px; }
   .svc .kicker { font-size: .74rem; font-weight: 700; letter-spacing: .14em; color: var(--ink-2); margin: 0; }
   .svc h3 { margin: 6px 0 4px; font-size: clamp(1.25rem, 2.6vw, 1.62rem); font-weight: 800; letter-spacing: .08em; line-height: 1.6; }
