@@ -48,8 +48,9 @@
     letter-spacing: .08em; padding: 13px 28px; border-radius: 999px;
     border: 1.5px solid var(--red); cursor: pointer; transition: background .2s, border-color .2s;
   }
-  .btn::after { content: "→"; font-weight: 700; }
+  .btn::after { content: "→"; font-weight: 700; display: inline-block; transition: transform .2s ease; }
   .btn:hover { background: var(--red-d); border-color: var(--red-d); }
+  .btn:hover::after { transform: translateX(4px); }
   .btn.ghost { background: transparent; color: var(--ink); border-color: var(--ink); }
   .btn.ghost::after { color: var(--red); }
   .btn.ghost:hover { background: rgba(43, 58, 85, .06); }
@@ -152,9 +153,9 @@
   .go {
     position: absolute; right: 16px; bottom: 14px; width: 36px; height: 36px;
     border-radius: 50%; background: var(--red); color: #fff; display: grid; place-items: center;
-    font-weight: 700; font-size: .95rem; transition: background .2s;
+    font-weight: 700; font-size: .95rem; transition: background .2s, transform .2s ease;
   }
-  .go:hover { background: var(--red-d); }
+  .go:hover { background: var(--red-d); transform: scale(1.12); }
 
   /* ---- plans band ---- */
   .plans-band { margin-top: 26px; border: 1.5px solid var(--ink); border-radius: 16px; background: var(--card); padding: clamp(24px, 3.5vw, 38px); text-align: center; }
@@ -267,6 +268,29 @@
     }
     .hero-side { animation: sideFlow 9s cubic-bezier(.33,.68,.4,1) infinite; }
     html { scroll-behavior: smooth; }
+
+    /* hero entrance */
+    @keyframes heroIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+    .hero h1, .hero-lead, .hero-name, .hero-actions, .hero-stage {
+      opacity: 0; animation: heroIn .7s cubic-bezier(.22,.68,.36,1) forwards;
+    }
+    .hero h1 { animation-delay: .05s; }
+    .hero-lead { animation-delay: .18s; }
+    .hero-name { animation-delay: .28s; }
+    .hero-actions { animation-delay: .38s; }
+    .hero-stage { animation-delay: .5s; }
+
+    /* squiggle draw-in, triggered together with the ancestor .reveal */
+    .squiggle path { transition: stroke-dashoffset 1s ease .25s; }
+
+    /* staggered card entrance */
+    @keyframes cardSettle { from { transform: translateY(20px); } to { transform: translateY(0); } }
+    .svc { transform: translateY(20px); }
+    .section.is-visible .svc { animation: cardSettle .6s cubic-bezier(.22,.68,.36,1) forwards; }
+    .section.is-visible .svc:nth-child(1) { animation-delay: .05s; }
+    .section.is-visible .svc:nth-child(2) { animation-delay: .13s; }
+    .section.is-visible .svc:nth-child(3) { animation-delay: .21s; }
+    .section.is-visible .svc:nth-child(4) { animation-delay: .29s; }
   }
 
   /* ---- responsive ---- */
@@ -617,9 +641,24 @@
         form.reset();
       });
     }
+    var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!reduceMotion) {
+      document.querySelectorAll('.squiggle path').forEach(function (p) {
+        var len = p.getTotalLength();
+        p.style.strokeDasharray = len;
+        p.style.strokeDashoffset = len;
+      });
+    }
     if ('IntersectionObserver' in window) {
       var io = new IntersectionObserver(function (entries) {
-        entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('is-visible'); io.unobserve(en.target); } });
+        entries.forEach(function (en) {
+          if (!en.isIntersecting) { return; }
+          en.target.classList.add('is-visible');
+          if (!reduceMotion) {
+            en.target.querySelectorAll('.squiggle path').forEach(function (p) { p.style.strokeDashoffset = '0'; });
+          }
+          io.unobserve(en.target);
+        });
       }, { threshold: 0.1 });
       document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
     }
